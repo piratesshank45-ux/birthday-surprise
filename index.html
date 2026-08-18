@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:300italic);
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fdfdfd 0%, #fdffcf 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.4);
+            background-image: url('../../puppy.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            padding: 100px 150px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s ease-out;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pakyu-button {
+            position: relative;
+            display: inline-block;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E72 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .pakyu-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .pakyu-button:active {
+            transform: translateY(-2px);
+        }
+
+        .iloveyou-button {
+            position: relative;
+            display: inline-block;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            user-select: none;
+        }
+
+        .iloveyou-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .iloveyou-button:active {
+            transform: translateY(-2px);
+        }
+
+        .separator {
+            font-size: 2em;
+            color: #999;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 60px;
+            opacity: 0;
+            animation: floatHeart 3s ease-out forwards;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-300px) scale(0.5) rotate(20deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <div class="container">
+        <h1>What do I want to say to u</h1>
+        <div class="button-group">
+            <a href="birthday-cake.html" class="pakyu-button">Pakyu 🔥</a>
+            <span class="separator">|</span>
+            <button class="iloveyou-button" id="iloveyou">I Love You ❤️</button>
+        </div>
+    </div>
+
+    <script>
+        const iloveyou = document.getElementById('iloveyou');
+
+        iloveyou.addEventListener('mouseover', function(e) {
+            // Generate random position
+            const randomX = Math.random() * 300 - 150; // -150 to 150
+            const randomY = Math.random() * 300 - 150; // -150 to 150
+            
+            iloveyou.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        });
+
+        iloveyou.addEventListener('mousemove', function(e) {
+            // Get button position
+            const rect = iloveyou.getBoundingClientRect();
+            const buttonCenterX = rect.left + rect.width / 2;
+            const buttonCenterY = rect.top + rect.height / 2;
+            
+            // Get mouse position
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+            
+            // Calculate distance
+            const distance = Math.sqrt(
+                Math.pow(mouseX - buttonCenterX, 2) + 
+                Math.pow(mouseY - buttonCenterY, 2)
+            );
+            
+            // If mouse is too close, move the button
+            if (distance < 120) {
+                const randomX = Math.random() * 400 - 200; // -200 to 200
+                const randomY = Math.random() * 400 - 200; // -200 to 200
+                
+                iloveyou.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            }
+        });
+
+        // Create floating hearts
+        const heartsContainer = document.getElementById('heartsContainer');
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '❤️';
+            
+            // Random horizontal position
+            const randomLeft = Math.random() * 100;
+            heart.style.left = randomLeft + '%';
+            heart.style.bottom = '-50px';
+            
+            // Random animation duration
+            const duration = 2 + Math.random() * 2;
+            heart.style.animation = `floatHeart ${duration}s ease-out forwards`;
+            
+            heartsContainer.appendChild(heart);
+            
+            // Remove heart after animation completes
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+        
+        // Create hearts every 200ms
+        setInterval(createHeart, 200);
+    </script>
+</body>
+</html>
